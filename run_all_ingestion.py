@@ -15,6 +15,18 @@ def run_script(script_path):
     else:
         current_env["PYTHONPATH"] = root_dir
 
+        # 3. VERIFICATION LOG: Force propagate both variants of the HuggingFace tokens
+    hf_token = current_env.get("HF_TOKEN") or current_env.get("HUGGINGFACEHUB_API_TOKEN")
+    
+    if hf_token:
+        print("🔒 HuggingFace authentication token detected! Injecting into child environment...")
+        # Bind BOTH names so both the HuggingFace Hub and LangChain wrappers see it
+        current_env["HF_TOKEN"] = hf_token
+        current_env["HUGGINGFACEHUB_API_TOKEN"] = hf_token
+    else:
+        print("⚠️ Warning: No HuggingFace token detected in environment context!")
+
+
     result = subprocess.run([sys.executable, script_path], env=current_env, check=False)
     
     if result.returncode != 0:
