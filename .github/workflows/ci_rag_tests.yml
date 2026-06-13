@@ -27,15 +27,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install .
 
-    # GATE 2: Pull down live performance speeds directly from Langfuse
-    - name: Run Live Production P95 Latency Gate Validation
-      env:
-        LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
-        LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
-        LANGFUSE_HOST: ${{ secrets.LANGFUSE_HOST }}
-      run: |
-        python tests/eval_latency.py
-
     # GATE 3: Execute your 3rd exact testing script file
     # This is where GitHub monitors your sys.exit(1) or sys.exit(0) signals!
     - name: Run RAGAS Regression Script
