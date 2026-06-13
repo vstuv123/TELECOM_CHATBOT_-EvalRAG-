@@ -1,0 +1,107 @@
+[
+  {
+    "question": "My phone shows SIM not provisioned after a software update.",
+    "ground_truth": "Soft-provision the SIM remotely via the BSS. If the issue remains, verify the SIM status and reprovision or replace the SIM as needed.",
+    "expected_sources": ["TK-005"]
+  },
+  {
+    "question": "I was charged twice for my monthly plan payment.",
+    "ground_truth": "Investigate the duplicate transaction with billing and confirm whether only one payment was received. Issue a refund for the duplicate charge and notify the customer when it is processed.",
+    "expected_sources": ["TK-006"]
+  },
+  {
+    "question": "Why is my mobile internet so slow even though I have a 4G plan?",
+    "ground_truth": "Slow speeds are often caused by network congestion, low signal, or an exhausted high-speed data cap. Try toggling airplane mode off and on to reconnect to the network; if you have used your high-speed allowance, speeds may be throttled.",
+    "expected_sources": ["FAQ-2"]
+  },
+  {
+    "question": "My phone is acting completely normal but I can't find where to tap to turn on that feature that routes calls through my home internet route instead of cellular.",
+    "ground_truth": "Go to Settings > Phone > Wi-Fi Calling and toggle it on.",
+    "expected_sources": ["FAQ-7"]
+  },
+  {
+    "question": "Customer reports no signal at home despite being in a covered area. What should they do first?",
+    "ground_truth": "Check the coverage map for the area, restart the phone, and reseat the SIM. If the issue continues, escalate for a network investigation and advise the customer to call 611.",
+    "expected_sources": ["FAQ-4"]
+  },
+  {
+    "question": "The vacation roaming bundle was activated too late and I got roaming charges. What happened?",
+    "ground_truth": "The roaming bundle was activated after the first abroad data session, so charges before activation were billed at standard roaming rates. Offer a goodwill credit for the pre-bundle charges and explain the need to activate roaming before using data overseas.",
+    "expected_sources": ["TK-004"]
+  },
+  {
+    "question": "If someone breaks into my house and runs off with my smartphone, what is the sequence of actions I need to take to guarantee they cannot use my cell service, and how much will it cost me to get back online?",
+    "ground_truth": "Report the loss by calling 611 immediately so we can block the SIM. Visit any store with a valid photo ID to get a replacement SIM. A fee of $5 applies.",
+    "expected_sources": ["FAQ-11"]
+  },
+  {
+    "question": "What should I do if my eSIM activation QR code keeps failing?",
+    "ground_truth": "Generate a fresh eSIM provisioning code and resend it. The previous QR code may have expired after a failed activation attempt.",
+    "expected_sources": ["TK-009"]
+  },
+  {
+    "question": "Why is my hotspot not working even though I have an unlimited plan?",
+    "ground_truth": "Verify the APN settings for tethering; the hotspot feature may require a special APN configuration. Send step-by-step APN instructions for the device.",
+    "expected_sources": ["TK-014"]
+  },
+  {
+    "question": "How can I report a network outage?",
+    "ground_truth": "Report the outage by calling 611, using the MyTelecom app under Help > Report an Issue, or contacting @TelecomSupport. The provider will notify you when service is restored.",
+    "expected_sources": ["FAQ-5"]
+  },
+  {
+    "question": "What numeric decibel range is considered acceptable or strong when assessing a mobile phone's signal level?",
+    "ground_truth": "A signal level above -85 dBm is considered good.",
+    "expected_sources": ["Guide page 5"]
+  },
+  {
+    "question": "How can I check if there is a network outage in my area?",
+    "ground_truth": "Use the coverage map on telecom.example.com/coverage or the MyTelecom app, and if coverage is shown as good, restart the phone and reseat the SIM.",
+    "expected_sources": ["FAQ-24"]
+  },
+  {
+    "question": "How did the transition to fourth generation IP-based networks change how regular voice calls are handled compared to older circuit-switched systems?",
+    "ground_truth": "4G networks are fully IP-based, meaning voice calls are transmitted as data (VoLTE) rather than over a separate circuit-switched channel.",
+    "expected_sources": ["Guide page 2"]
+  },
+  {
+    "question": "What internal parameters should I look at on my phone if it stops connecting to cellular internet right after performing a factory reset or switching out the card?",
+    "ground_truth": "Navigate to Settings > Mobile Network > APN and verify the APN name, username, and password match the carrier's published settings.",
+    "expected_sources": ["Guide page 6"]
+  },
+  {
+    "question": "I just swapped out my old card and put the brand new one in my tray, but it has been 30 minutes and I still see an empty signal bar. Do I just keep waiting or should I toggle the power?",
+    "ground_truth": "A new SIM card typically activates within 15 minutes... If it has not activated after 1 hour restart the phone.",
+    "expected_sources": ["FAQ-12"]
+  },
+  {
+    "question": "A customer gets a voicemail immediately even though they are not on Do Not Disturb. What might be the issue?",
+    "ground_truth": "Call barring may have been activated on the account without the customer knowing. Deactivate call barring remotely and advise the customer to set a call barring PIN.",
+    "expected_sources": ["TK-007"]
+  },
+  {
+    "question": "Which specific radio wave spectrum frequencies are best at penetrating concrete structures and traveling vast geographic distances?",
+    "ground_truth": "Lower frequencies (700 MHz, 800 MHz) travel farther and penetrate buildings better but carry less data.",
+    "expected_sources": ["Guide page 3"]
+  },
+  {
+    "question": "How do I keep my number when switching to your network?",
+    "ground_truth": "Number portability is free and usually completes within two hours on working days. Begin the port request by calling 611 or visiting a store, and keep the old SIM active until you receive confirmation.",
+    "expected_sources": ["FAQ-13"]
+  },
+  {
+    "question": "What should a customer do if their account appears to have been downgraded without authorization?",
+    "ground_truth": "Investigate the account for possible compromise, reset credentials, enable two-factor authentication, reverse the plan change, and file a security incident report.",
+    "expected_sources": ["TK-020"]
+  },
+  {
+    "question": "My plan details say I have unlimited internet, so why am I getting a warning that sharing my connection with my laptop is going to eat into my allowance?",
+    "ground_truth": "Note that hotspot usage counts against your monthly data allowance. Some plans restrict hotspot use...",
+    "expected_sources": ["FAQ-21"]
+  },
+  {
+    "question": "I don't care about my data balance, I just want to know where I can view a complete history of every single individual phone call and SMS I made this month with their exact timestamps and costs.",
+    "ground_truth": "Itemised bills show every call, SMS, and data session with date, time, and cost.",
+    "expected_sources": ["FAQ-18"]
+  }
+]

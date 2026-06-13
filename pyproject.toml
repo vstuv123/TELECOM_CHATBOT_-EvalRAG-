@@ -1,0 +1,35 @@
+[project]
+name = "rag-telecom-chatbot"
+version = "0.1.0"
+description = "RAG-based telecom customer care chatbot tutorial"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain",
+    "langchain-core",
+    "langchain-chroma",
+    "langchain-groq",
+    "langchain-huggingface",
+    "chromadb",
+    "sentence-transformers",
+    "pandas",
+    "python-dotenv",
+    "streamlit",
+    "fpdf2",
+    "pypdf",
+    "langchain-community",
+    "langchain-text-splitters",
+    "ragas",
+    "datasets",
+    "langchain-google-vertexai",
+    "langfuse",
+    "langfuse-langchain",
+]
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ingests*"]  # Replace this with the specific folder name containing your main python code scripts if applicable
+exclude = ["data", "chroma_store", "datasets"]
+

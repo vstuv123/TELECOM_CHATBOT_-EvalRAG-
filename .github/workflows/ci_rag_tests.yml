@@ -1,0 +1,54 @@
+name: RAG Quality Gate Regression Test
+
+# 1. Trigger the cloud server ONLY when a Pull Request is opened against the main branch
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-ragas-evaluations:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step A: Download your repository code onto the GitHub Cloud computer
+    - name: Checkout Repository Code
+      uses: actions/checkout@v4
+
+    # Step B: Set up a clean Python environment matching your local machine
+    - name: Initialize Python 3.11 Environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip' # Speeds up future runs by caching libraries
+
+    # Step C: Install your project libraries
+    - name: Install Project Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install .
+
+    # GATE 1: Check Retriever and Reranker Uplift Matrix
+    - name: Run Baseline vs Reranker Metric Uplift Test
+      run: |
+        python tests/eval_retriever.py
+
+    # GATE 2: Pull down live performance speeds directly from Langfuse
+    - name: Run Live Production P95 Latency Gate Validation
+      env:
+        LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+        LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+        LANGFUSE_HOST: ${{ secrets.LANGFUSE_HOST }}
+      run: |
+        python tests/check_latency.py
+
+    # GATE 3: Execute your 3rd exact testing script file
+    # This is where GitHub monitors your sys.exit(1) or sys.exit(0) signals!
+    - name: Run RAGAS Regression Script
+      env:
+        # Securely pass your private environment keys from GitHub Secrets to the script run
+        GROQ_API_KEY_1: ${{ secrets.GROQ_API_KEY_1 }}
+        GROQ_API_KEY_2: ${{ secrets.GROQ_API_KEY_2 }}
+        CHATBOT_GROQ_API_KEY: ${{ secrets.CHATBOT_GROQ_API_KEY }}
+        # Add your HuggingFace or Langfuse variables here if your script reads them
+      run: |
+        python tests/eval_ragas.py
