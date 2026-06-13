@@ -32,7 +32,7 @@ def verify_production_latency():
         sys.exit(1)
 
     # Extract execution durations (Langfuse tracks duration in seconds)
-    durations = [trace.duration for trace in traces.data if trace.duration is not None]
+    durations = [trace.latency for trace in traces.data if trace.latency is not None]
     
     if not durations:
         print("⚠️ No live production trace history located for 'rag_stream_request' in the last 24 hours.")
