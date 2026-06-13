@@ -29,6 +29,9 @@ jobs:
 
     # GATE 1: Check Retriever and Reranker Uplift Matrix
     - name: Run Baseline vs Reranker Metric Uplift Test
+      env:
+        # AUTHENTICATING WITH HUGGINGFACE
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
       run: |
         python tests/eval_retriever.py
 
@@ -49,6 +52,6 @@ jobs:
         GROQ_API_KEY_1: ${{ secrets.GROQ_API_KEY_1 }}
         GROQ_API_KEY_2: ${{ secrets.GROQ_API_KEY_2 }}
         CHATBOT_GROQ_API_KEY: ${{ secrets.CHATBOT_GROQ_API_KEY }}
-        # Add your HuggingFace or Langfuse variables here if your script reads them
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
       run: |
         python tests/eval_ragas.py
