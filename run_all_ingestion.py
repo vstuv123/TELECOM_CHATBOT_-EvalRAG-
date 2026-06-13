@@ -39,3 +39,4 @@ if __name__ == "__main__":
             
     print("🎉 All three collections successfully built inside ChromaDB!")
     print("============================================================")
+"# Triggering fresh RAG Quality Gate execution" 
