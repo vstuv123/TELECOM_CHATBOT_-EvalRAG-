@@ -33,6 +33,7 @@ jobs:
         # AUTHENTICATING WITH HUGGINGFACE
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
       run: |
+        python run_all_ingestion.py
         python tests/eval_retriever.py
 
     # GATE 2: Pull down live performance speeds directly from Langfuse
@@ -55,4 +56,5 @@ jobs:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
       run: |
         python tests/eval_ragas.py
+
 
