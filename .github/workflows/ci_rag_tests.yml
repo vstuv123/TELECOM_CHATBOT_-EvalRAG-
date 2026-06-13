@@ -36,5 +36,7 @@ jobs:
         GROQ_API_KEY_2: ${{ secrets.GROQ_API_KEY_2 }}
         CHATBOT_GROQ_API_KEY: ${{ secrets.CHATBOT_GROQ_API_KEY }}
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        # FIX: Explicitly map your root directory so the script can see 'rag_chain'
+        PYTHONPATH: ${{ github.workspace }}
       run: |
         python tests/eval_ragas.py
