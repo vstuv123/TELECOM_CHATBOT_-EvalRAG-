@@ -4,8 +4,18 @@ import subprocess
 
 def run_script(script_path):
     print(f"🚀 Running ingestion: {script_path}...")
-    # Runs the python script and pipes output to console live
-    result = subprocess.run([sys.executable, script_path], check=False)
+    
+    # FIX: Inject the root workspace path into the child process environment
+    current_env = os.environ.copy()
+    root_dir = os.getcwd()
+    
+    # This forces the script to look at the root directory for 'models'
+    if "PYTHONPATH" in current_env:
+        current_env["PYTHONPATH"] = f"{root_dir}{os.pathsep}{current_env['PYTHONPATH']}"
+    else:
+        current_env["PYTHONPATH"] = root_dir
+
+    result = subprocess.run([sys.executable, script_path], env=current_env, check=False)
     
     if result.returncode != 0:
         print(f"❌ Error: {script_path} failed with exit code {result.returncode}")
@@ -14,7 +24,6 @@ def run_script(script_path):
 
 if __name__ == "__main__":
     print("============================================================")
-    # Target your specific files inside your ingests folder
     ingestion_scripts = [
         "ingests/ingest_faq.py",
         "ingests/ingest_pdf.py",
