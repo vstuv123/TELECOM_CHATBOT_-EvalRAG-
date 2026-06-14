@@ -194,70 +194,6 @@ LangFuse cloud evaluations are used to assess:
 
 ---
 
-## Prompt Versioning
-
-Prompts are treated as first-class assets and versioned alongside application code.
-
-Rather than embedding prompts directly inside Python files, prompts are stored as external template files and loaded dynamically at runtime. This makes prompt changes traceable, reproducible, and easy to evaluate against previous versions.
-
-### Why Prompt Versioning?
-
-Prompt modifications can significantly impact system behavior, retrieval grounding, citation quality, and evaluation metrics. Versioning prompts allows changes to be tracked and correlated with evaluation results.
-
-Example workflow:
-
-```text
-Prompt v1.0.0
-    ↓
-RAGAS Evaluation
-    ↓
-Faithfulness = 0.75
-
-Prompt v1.1.0
-    ↓
-RAGAS Evaluation
-    ↓
-Faithfulness = 0.82
-```
-
-### Prompt Structure
-
-```text
-prompts/
-├── telecom_assistant_v1.0.0.txt
-├── telecom_assistant_v1.1.0.txt
-```
-
-Active prompt selection is managed through configuration:
-
-```python
-ACTIVE_PROMPT = "v1.0.0"
-```
-
-### LangFuse Integration
-
-Each request trace records:
-
-* Prompt version
-* Prompt file
-* User question
-* Retrieved documents
-* Generated answer
-
-This enables complete traceability between prompt versions and system behavior.
-
-Example metadata:
-
-```json
-{
-  "prompt_version": "v1.0.0",
-  "prompt_file": "telecom_assistant_v1.0.0.txt"
-}
-```
-
-Combined with LangFuse tracing and RAGAS evaluation, prompt versioning provides a reproducible experimentation workflow for prompt engineering and regression testing.
-
-
 ## Evaluation Framework
 
 The project includes multiple evaluation layers.
@@ -282,7 +218,7 @@ The Cross Encoder significantly improved retrieval quality.
 | Top-1 Accuracy | 61.90%          | 80.95%         |
 | MRR            | 71.59%          | 84.29%         |
 
-![Retrieval Results](assets/screenshots/retrieval-results.png)
+![Retrieval Results](assets/screenshots/retrieval_results.png)
 
 ---
 
