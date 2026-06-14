@@ -35,12 +35,8 @@ jobs:
         HUGGINGFACEHUB_API_TOKEN: ${{ secrets.HF_TOKEN }} 
         PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/ingests:${{ github.workspace }}/src
       run: |
-        # 1. Dynamically build the full 3-collection database on the runner
         python run_all_ingestion.py
-        
-        # 2. Execute the evaluation script against the freshly populated database
         python tests/eval_retriever.py
-
 
     # GATE 2: Pull down live performance speeds directly from Langfuse
     - name: Run Live Production P95 Latency Gate Validation
@@ -64,3 +60,5 @@ jobs:
         PYTHONPATH: ${{ github.workspace }}
       run: |
         python tests/eval_ragas.py
+
+

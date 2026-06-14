@@ -23,6 +23,7 @@ The system retrieves relevant information, reranks results using a Cross-Encoder
 The telecom assistant provides grounded responses using FAQs, support tickets, and troubleshooting guides.
 
 ![Chat UI](assets/screenshots/chat-ui.png)
+A Retrieval-Augmented Generation (RAG) customer care chatbot for telecom support. It answers questions about mobile connectivity, billing, SIM issues, and roaming by retrieving relevant context from three knowledge sources and generating responses with Qwen3-32B via Groq. 
 
 ## Architecture
 
