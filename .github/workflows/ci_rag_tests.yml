@@ -27,6 +27,30 @@ jobs:
         python -m pip install --upgrade pip
         pip install .
 
+    # GATE 1: Build the temporary Vector Database and Check Uplift
+    - name: Run Master Ingestion and Retrieval Uplift Test
+      env:
+        # Map your repository secret to BOTH variables to ensure complete tool alignment
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        HUGGINGFACEHUB_API_TOKEN: ${{ secrets.HF_TOKEN }} 
+        PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/ingests:${{ github.workspace }}/src
+      run: |
+        # 1. Dynamically build the full 3-collection database on the runner
+        python run_all_ingestion.py
+        
+        # 2. Execute the evaluation script against the freshly populated database
+        python tests/eval_retriever.py
+
+
+    # GATE 2: Pull down live performance speeds directly from Langfuse
+    - name: Run Live Production P95 Latency Gate Validation
+      env:
+        LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+        LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+        LANGFUSE_HOST: ${{ secrets.LANGFUSE_HOST }}
+      run: |
+        python tests/eval_latency.py
+
     # GATE 3: Execute your 3rd exact testing script file
     # This is where GitHub monitors your sys.exit(1) or sys.exit(0) signals!
     - name: Run RAGAS Regression Script
@@ -36,7 +60,7 @@ jobs:
         GROQ_API_KEY_2: ${{ secrets.GROQ_API_KEY_2 }}
         CHATBOT_GROQ_API_KEY: ${{ secrets.CHATBOT_GROQ_API_KEY }}
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        # FIX: Explicitly map your root directory so the script can see 'rag_chain'
+        # Explicitly map your root directory so the script can see 'rag_chain'
         PYTHONPATH: ${{ github.workspace }}
       run: |
         python tests/eval_ragas.py

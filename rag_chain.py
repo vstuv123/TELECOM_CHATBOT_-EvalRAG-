@@ -12,6 +12,8 @@ from observability import langfuse  # Global verified client instance
 from retriever import build_retriever
 import re
 from langfuse.decorators import observe, langfuse_context
+from config import ACTIVE_PROMPT
+from pathlib import Path
 
 # Define common phrases your model uses when refusing to answer out-of-context queries
 REFUSAL_PHRASES = [
@@ -30,22 +32,10 @@ REFUSAL_PHRASES = [
     "context doesn't have information"
 ]
 
-SYSTEM_PROMPT = """You are a helpful and professional telecom customer care assistant.
-Your job is to help customers resolve technical issues with their mobile service.
-
-Use ONLY the context below to answer the customer's question.
-The context comes from FAQ entries, resolved support tickets, and guide document chunks.
-
-When you answer, cite each fact by source and identifier, for example:
-- [FAQ #123]
-- [Ticket #TK-005]
-- [Guide chunk 12]
-
-If the context does not contain enough information to answer confidently, say so clearly and suggest the customer call 611 or use the MyTelecom app.
-
-Context:
-{context}
-"""
+PROMPT_VERSION = "v1.0.0"
+SYSTEM_PROMPT = Path(
+    f"prompts/telecom_assistant_{ACTIVE_PROMPT}.txt"
+).read_text()
 
 def _format_docs(docs: list[Document]) -> str:
     sections = []
@@ -139,7 +129,13 @@ def build_chain():
             
             # 1. Update the root trace inputs natively using context binding
             langfuse_context.update_current_trace(
-                input={"question": question}
+                input={
+                    "question": question
+                },
+                metadata={
+                    "prompt_version": ACTIVE_PROMPT,
+                    "prompt_file": f"telecom_assistant_{ACTIVE_PROMPT}.txt"
+                }
             )
             
             # 2. Measure Retriever Latency
@@ -298,7 +294,13 @@ def build_chain():
             
             # 1. Update the root trace inputs natively using context binding
             langfuse_context.update_current_trace(
-                input={"question": question}
+                input={
+                    "question": question
+                },
+                metadata={
+                    "prompt_version": ACTIVE_PROMPT,
+                    "prompt_file": f"telecom_assistant_{ACTIVE_PROMPT}.txt"
+                }
             )
             
             # Retrieval Processing
