@@ -378,52 +378,52 @@ except Exception as e:
     print(f"\n❌ Error building final DataFrame or saving CSV: {e}")
 
 
-# # =========================================================
-# # CRITICAL PHASE 3: REGRESSION GATE CONTROL
-# # =========================================================
-# print("\nChecking system quality gate thresholds...")
+# =========================================================
+# CRITICAL PHASE 3: REGRESSION GATE CONTROL
+# =========================================================
+print("\nChecking system quality gate thresholds...")
 
-# # 1. Define strict production acceptance benchmarks (0.0 to 1.0 scale)
-# FAITHFULNESS_THRESHOLD = 0.85      # 85% minimum factual groundedness
-# ANSWER_RELEVANCY_THRESHOLD = 0.80  # 80% minimum alignment to user intent
+# 1. Define strict production acceptance benchmarks (0.0 to 1.0 scale)
+FAITHFULNESS_THRESHOLD = 0.85      # 85% minimum factual groundedness
+ANSWER_RELEVANCY_THRESHOLD = 0.80  # 80% minimum alignment to user intent
 
-# failed_gate = False
-# failure_reasons = []
+failed_gate = False
+failure_reasons = []
 
-# # 2. Extract and check the actual unified metrics
-# current_faithfulness = final_results.get("faithfulness", 0.0)
-# current_relevancy = final_results.get("answer_relevancy", 0.0)
+# 2. Extract and check the actual unified metrics
+current_faithfulness = final_results.get("faithfulness", 0.0)
+current_relevancy = final_results.get("answer_relevancy", 0.0)
 
-# if current_faithfulness < FAITHFULNESS_THRESHOLD:
-#     failed_gate = True
-#     failure_reasons.append(
-#         f"❌ QUALITY REGRESSION: Faithfulness score dropped to {current_faithfulness:.4f} "
-#         f"(Target Requirement: >= {FAITHFULNESS_THRESHOLD})"
-#     )
+if current_faithfulness < FAITHFULNESS_THRESHOLD:
+    failed_gate = True
+    failure_reasons.append(
+        f"❌ QUALITY REGRESSION: Faithfulness score dropped to {current_faithfulness:.4f} "
+        f"(Target Requirement: >= {FAITHFULNESS_THRESHOLD})"
+    )
 
-# if current_relevancy < ANSWER_RELEVANCY_THRESHOLD:
-#     failed_gate = True
-#     failure_reasons.append(
-#         f"❌ QUALITY REGRESSION: Answer Relevancy score dropped to {current_relevancy:.4f} "
-#         f"(Target Requirement: >= {ANSWER_RELEVANCY_THRESHOLD})"
-#     )
+if current_relevancy < ANSWER_RELEVANCY_THRESHOLD:
+    failed_gate = True
+    failure_reasons.append(
+        f"❌ QUALITY REGRESSION: Answer Relevancy score dropped to {current_relevancy:.4f} "
+        f"(Target Requirement: >= {ANSWER_RELEVANCY_THRESHOLD})"
+    )
 
-# # 3. Intercept execution to drive CI/CD build success or blockage
-# print("\n" + "="*50)
-# print("             🛡️ REGRESSION GATE ANALYSIS            ")
-# print("="*50)
+# 3. Intercept execution to drive CI/CD build success or blockage
+print("\n" + "="*50)
+print("             🛡️ REGRESSION GATE ANALYSIS            ")
+print("="*50)
 
-# if failed_gate:
-#     print("🛑 BUILD INTERRUPTED: Your latest adjustments breached safety bars!")
-#     for reason in failure_reasons:
-#         print(reason)
-#     print("\nAction Needed: Revert or tune your system prompt / chunk files before merging.")
-#     print("="*50 + "\n")
-#     sys.exit(1)  # Hard OS failure code blocks the branch or GitHub Action pull request merge
-# else:
-#     print("✅ BUILD COMPLIANT! All performance metrics meet active safety constraints.")
-#     print(f"🔹 Verified Faithfulness: {current_faithfulness:.4f}")
-#     print(f"🔹 Verified Answer Relevancy: {current_relevancy:.4f}")
-#     print("\nStatus: Safe to merge pull request into your core main production branch.")
-#     print("="*50 + "\n")
-#     sys.exit(0)  # Standard clean code lets development pipelines advance normally
+if failed_gate:
+    print("🛑 BUILD INTERRUPTED: Your latest adjustments breached safety bars!")
+    for reason in failure_reasons:
+        print(reason)
+    print("\nAction Needed: Revert or tune your system prompt / chunk files before merging.")
+    print("="*50 + "\n")
+    sys.exit(1)  # Hard OS failure code blocks the branch or GitHub Action pull request merge
+else:
+    print("✅ BUILD COMPLIANT! All performance metrics meet active safety constraints.")
+    print(f"🔹 Verified Faithfulness: {current_faithfulness:.4f}")
+    print(f"🔹 Verified Answer Relevancy: {current_relevancy:.4f}")
+    print("\nStatus: Safe to merge pull request into your core main production branch.")
+    print("="*50 + "\n")
+    sys.exit(0)  # Standard clean code lets development pipelines advance normally
